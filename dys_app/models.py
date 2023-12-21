@@ -2,24 +2,20 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    ROLE = [
+        ('Parent', 'parent'),
+        ('Enfant', 'enfant')
+    ]
 
-class Parent(models.Model):
     id = models.AutoField(primary_key=True)
+    role = models.CharField(max_length=50, choices=ROLE)
     nom = models.CharField(max_length=50)
     prenom = models.CharField(max_length=50)
     mdp = models.CharField(max_length=50)
     email = models.CharField(max_length=50)
     def __str__(self):
-        return self.parent
+        return self.nom
 
-class Enfant(models.Model):
-    id = models.AutoField(primary_key=True)
-    nom = models.CharField(max_length=50)
-    prenom = models.CharField(max_length=50)
-    niveau = models.CharField(max_length=50)
-    def __str__(self):
-        return self.enfant
 
         
 class Lesson(models.Model):

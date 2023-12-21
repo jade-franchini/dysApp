@@ -1,10 +1,9 @@
 from django.contrib import admin
-from .models import Lesson, Parent, Enfant, Exercice, Phrase, Option, Recompense, Reponse, Lecture, Orthographe, LectureRapide, Memoire, MathsCalcul, MathsCompter, Resultat
+from .models import Lesson, UserProfile, Exercice, Phrase, Option, Recompense, Reponse, Lecture, Orthographe, LectureRapide, Memoire, MathsCalcul, MathsCompter, Resultat
 
 # Register your models here.
 admin.site.register(Lesson)
-admin.site.register(Parent)
-admin.site.register(Enfant)
+admin.site.register(UserProfile)
 admin.site.register(Exercice)
 admin.site.register(Phrase)
 admin.site.register(Option)
