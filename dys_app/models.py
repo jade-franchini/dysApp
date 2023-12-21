@@ -4,6 +4,24 @@ from django.contrib.auth.models import User
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
+class Parent(models.Model):
+    id = models.AutoField(primary_key=True)
+    nom = models.CharField(max_length=50)
+    prenom = models.CharField(max_length=50)
+    mdp = models.CharField(max_length=50)
+    email = models.CharField(max_length=50)
+    def __str__(self):
+        return self.parent
+
+class Enfant(models.Model):
+    id = models.AutoField(primary_key=True)
+    nom = models.CharField(max_length=50)
+    prenom = models.CharField(max_length=50)
+    niveau = models.CharField(max_length=50)
+    def __str__(self):
+        return self.enfant
+
+        
 class Lesson(models.Model):
     SCHOOL_LEVEL_CHOICES = [
         ('CP', 'cp'),
@@ -23,22 +41,43 @@ class Lesson(models.Model):
     def __str__(self):
         return self.title
 
-class User(models.Model):
-    id = models.AutoField(primary_key=True)
-    nom = models.CharField(max_length=50)
-    prenom = models.CharField(max_length=50)
-    mdp = models.CharField(max_length=50)
-    email = models.CharField(max_length=50)
-    def __str__(self):
-        return self.user
+from django.db import models
 
-class Enfant(models.Model):
-    id = models.AutoField(primary_key=True)
-    nom = models.CharField(max_length=50)
-    prenom = models.CharField(max_length=50)
-    niveau = models.CharField(max_length=50)
-    def __str__(self):
-        return self.enfant
+# Exercices en génral (première page)
+class Exercice(models.Model):
+    titre = models.CharField(max_length=255)
+    description = models.TextField()
+
+# contient les phrases à trous (incomplète)
+class Phrase(models.Model):
+    exercice = models.ForeignKey(Exercice, on_delete=models.CASCADE)
+    texte = models.TextField()
+
+# représente les différentes options parmi lesquelles l'enfant peut choisir pour compléter une phrase. 
+# Chaque option a un indicateur pour indiquer si elle est correcte ou non.
+class Option(models.Model):
+    phrase = models.ForeignKey(Phrase, on_delete=models.CASCADE)
+    texte_option = models.CharField(max_length=255)
+    est_correcte = models.BooleanField(default=False)
+
+# stocke les réponses fournies par l'enfant pour chaque phrase. 
+# Il indique également si la réponse est correcte
+class Reponse(models.Model):
+    exercice = models.ForeignKey(Exercice, on_delete=models.CASCADE)
+    phrase = models.ForeignKey(Phrase, on_delete=models.CASCADE)
+    option_selectionnee = models.ForeignKey(Option, on_delete=models.CASCADE)
+    est_correcte = models.BooleanField()
+
+
+
+
+
+
+
+
+
+
+
 
 class Lecture(models.Model):
     title = models.CharField(max_length=255)
@@ -81,24 +120,28 @@ class Memoire(models.Model):
     def __str__(self):
         return self.lecture
 
-class Orthographe(models.Model):
+class MathsCompter(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
-    liste = models.TextField()
-    mots = models.CharField(max_length=150)
+    img = models.TextField()
     résultat = models.SmallIntegerField()
     def __str__(self):
         return self.lecture
-# table user 
-class User(models.Model):
-    user_id= models.AutoField(primary_key=True)
-    name= models.CharField(max_length=25)
-    surname= models.CharField(max_length=25)
-    
-# table reservation 
-class Reservation(models.Model):
-    isbn = models.ForeignKey(Title, on_delete=models.CASCADE)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class MathsCalcul(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    résultat = models.SmallIntegerField()
+    def __str__(self):
+        return self.lecture
+
+class Resultat(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    résultat = models.SmallIntegerField()
+    def __str__(self):
+        return self.lecture
+
 
 class Meta:
     indexes = [
