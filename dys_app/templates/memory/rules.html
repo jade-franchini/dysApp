@@ -1,0 +1,11 @@
+<!-- rules.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="rules-page">
+    <h2>Règle du jeu</h2>
+
+    <p>Tu as 10 secondes pour retenir l'ordre de la liste de mot, remets ensuite les mots dans l'ordre, A toi de jouer!  </p>
+    <a class="start-btn" href="{% url 'start_memory_game' %}">Commencer</a>
+  </div>
+{% endblock %}
